@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">CooperachApp</string>
+    <string name="app_name">Co-operach App</string>
+    <string name="calculator_input_amount">Total</string>
+    <string name="calculator_input_people">Personas</string>
+    <string name="calculator_input_percentage_tip">Propina %</string>
+    <string name="calculator_input_tip">Propina $</string>
+    <string name="calculator_input_no_tip">Sin propina</string>
+    <string name="calculator_input_tip_amount">Propina</string>
 </resources>

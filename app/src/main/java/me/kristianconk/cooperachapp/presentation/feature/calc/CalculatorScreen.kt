@@ -1,4 +1,4 @@
-package me.kristianconk.cooperachapp.presentation
+package me.kristianconk.cooperachapp.presentation.feature.calc
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,8 +36,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.kristianconk.cooperachapp.R
-import me.kristianconk.cooperachapp.calculator.TipType
 import me.kristianconk.cooperachapp.calculator.calcTotal
+import me.kristianconk.cooperachapp.domain.model.TipType
 import me.kristianconk.cooperachapp.presentation.utils.FormatUtils
 import me.kristianconk.cooperachapp.ui.theme.CooperachAppTheme
 

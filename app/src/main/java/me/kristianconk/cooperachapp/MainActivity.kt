@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import me.kristianconk.cooperachapp.presentation.CalculatorScreen
+import me.kristianconk.cooperachapp.presentation.feature.calc.CalculatorScreen
 import me.kristianconk.cooperachapp.ui.theme.CooperachAppTheme
 
 class MainActivity : ComponentActivity() {

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,10 +26,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -47,15 +48,26 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                colors = topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
                 title = {
                     Text(
                         text = "Co-operach App",
                         color = MaterialTheme.colorScheme.onPrimary
                     )
-                })
+                },
+                colors = topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                ),
+                actions = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            imageVector = Icons.Default.History,
+                            tint = MaterialTheme.colorScheme.onPrimary,
+                            contentDescription = "Clear"
+                        )
+
+                    }
+                }
+            )
         }
     ) { paddingValues ->
         var totalText by remember {
@@ -180,7 +192,13 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
                 )
             Spacer(modifier = Modifier.height(24.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "total por persona ${totalFinal.value}")
+                Text(
+                    text = "Total por persona ${
+                        FormatUtils.formatDoubleToMexicanCurrency(
+                            totalFinal.value
+                        )
+                    }"
+                )
             }
             Spacer(modifier = Modifier.height(24.dp))
             Button(onClick = {
@@ -193,6 +211,12 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
                 onShareClick(message)
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Compartir")
+            }
+            Button(
+                onClick = {},
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Guardar")
             }
         }
     }

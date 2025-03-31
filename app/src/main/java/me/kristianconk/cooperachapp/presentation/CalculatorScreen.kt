@@ -222,7 +222,7 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun CalculatorScreenPreview() {
     CooperachAppTheme {

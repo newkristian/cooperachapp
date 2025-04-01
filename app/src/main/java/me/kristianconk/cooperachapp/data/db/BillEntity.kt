@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 data class BillEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val date: LocalDateTime,
+    val date: String,
     val amount: Double,
     val people: Int,
     val tipType: String,
@@ -20,7 +20,7 @@ data class BillEntity(
 ) {
     fun toSplitedBill(): SplitedBill {
         return SplitedBill(
-            date = date,
+            date = converters.fromTimestamp(date) ?: LocalDateTime.now(),
             amount = amount,
             people = people,
             tipType = TipType.valueOf(tipType, tipAmount)
@@ -28,9 +28,10 @@ data class BillEntity(
     }
 
     companion object {
+        val converters = Converters()
         fun fromSplitedBill(splitedBill: SplitedBill): BillEntity {
             return BillEntity(
-                date = splitedBill.date,
+                date = converters.dateToTimestamp(splitedBill.date) ?: "",
                 amount = splitedBill.amount,
                 people = splitedBill.people,
                 tipType = splitedBill.tipType.toString(),

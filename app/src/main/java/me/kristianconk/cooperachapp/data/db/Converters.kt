@@ -2,17 +2,21 @@ package me.kristianconk.cooperachapp.data.db
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import java.util.Date
+import java.time.LocalDateTime
+
 
 @ProvidedTypeConverter
 class Converters {
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
+    fun fromTimestamp(value: String?): LocalDateTime? {
+        return value?.let {
+            LocalDateTime.parse(it)
+        }
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time?.toLong()
+    fun dateToTimestamp(date: LocalDateTime?): String? {
+        return date?.toString()
     }
 }
+

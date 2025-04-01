@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(entities = [BillEntity::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
 abstract class BillDatabase: RoomDatabase() {
     abstract fun billDao(): BillDao
 
@@ -24,7 +23,6 @@ abstract class BillDatabase: RoomDatabase() {
         private fun buildDatabase(context: Context): BillDatabase {
             // en la primer version no hay plan de migración
             return Room.databaseBuilder(context, BillDatabase::class.java, DB_NAME)
-                .addTypeConverter(Converters())
                 .fallbackToDestructiveMigration().build()
         }
     }

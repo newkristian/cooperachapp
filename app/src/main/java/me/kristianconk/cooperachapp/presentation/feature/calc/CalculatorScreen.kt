@@ -186,11 +186,21 @@ fun CalculatorScreen(actions: CalculatorActions) {
             Spacer(modifier = Modifier.height(24.dp))
             OutlinedTextField(
                 value = tipText,
-                onValueChange = { tipText = it },
+                onValueChange = { newVal ->
+                    val filtered = newVal.filter { char -> char.isDigit() }
+                    tipText = filtered
+                },
                 label = { Text(text = stringResource(id = R.string.calculator_input_tip_amount)) },
                 modifier = Modifier
                     .fillMaxWidth(),
                 enabled = selectedQuantityTip || selectedPercentageTip,
+                trailingIcon = {
+                    if (tipText.isNotEmpty()) {
+                        IconButton(onClick = { tipText = "" }) {
+                            Icon(Icons.Filled.Clear, contentDescription = "Clear")
+                        }
+                    }
+                },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 
                 )

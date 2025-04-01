@@ -1,6 +1,8 @@
 package me.kristianconk.cooperachapp.presentation.feature.history
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -15,9 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import me.kristianconk.cooperachapp.calculator.calcTip
+import me.kristianconk.cooperachapp.calculator.calcTotal
 import me.kristianconk.cooperachapp.domain.model.SplitedBill
 import me.kristianconk.cooperachapp.domain.model.TipType
+import me.kristianconk.cooperachapp.presentation.utils.FormatUtils
 import me.kristianconk.cooperachapp.ui.theme.CooperachAppTheme
 import java.time.LocalDateTime
 
@@ -56,7 +63,19 @@ fun HistoryScreen(
 
 @Composable
 fun HistoryItem(item: SplitedBill, modifier: Modifier = Modifier) {
-    Text(text = "${item.amount}")
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        val initial = FormatUtils.formatDoubleToMexicanCurrency(item.amount)
+        val tip = FormatUtils.formatDoubleToMexicanCurrency(calcTip(item.amount, item.tipType))
+        val final = FormatUtils.formatDoubleToMexicanCurrency(calcTotal(item))
+        Text(text = FormatUtils.formatDate(item.date), fontWeight = FontWeight.Bold)
+        Text(
+            text = "$initial + $tip ➔ \uD83D\uDC65 ${item.people} ➔ \uD83D\uDCB5 $final"
+        )
+    }
 }
 
 @Composable

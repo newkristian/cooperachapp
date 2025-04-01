@@ -1,5 +1,6 @@
 package me.kristianconk.cooperachapp.presentation.utils
 
+import java.time.LocalDateTime
 import java.util.Locale
 
 object FormatUtils {
@@ -28,5 +29,10 @@ object FormatUtils {
         currencyFormat.minimumFractionDigits = 2
         return currencyFormat.format(amount)
 
+    }
+
+    fun formatDate(date: LocalDateTime): String {
+        val formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+        return date.format(formatter)
     }
 }

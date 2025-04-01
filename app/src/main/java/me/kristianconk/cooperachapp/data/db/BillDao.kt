@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BillDao {
 
-    @Query("SELECT * FROM bills ORDER BY date DESC")
-    suspend fun getAllBills(): Flow<List<BillEntity>>
+    @Query("SELECT * FROM bills")
+    fun getAllBills(): Flow<List<BillEntity>>
 
     @Query("SELECT * from bills WHERE id = :id")
     fun getItem(id: Int): Flow<BillEntity>

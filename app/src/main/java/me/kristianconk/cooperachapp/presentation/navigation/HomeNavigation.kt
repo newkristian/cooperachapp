@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import me.kristianconk.cooperachapp.presentation.feature.calc.CalculatorActions
 import me.kristianconk.cooperachapp.presentation.feature.calc.CalculatorScreen
+import me.kristianconk.cooperachapp.presentation.feature.history.HistoryScreen
 import me.kristianconk.cooperachapp.presentation.feature.history.HistoryViewModel
 import me.kristianconk.cooperachapp.presentation.feature.splash.SplashScreen
 
@@ -40,6 +41,13 @@ fun HomeNavigation(historyViewModel: HistoryViewModel, activity: ComponentActivi
                 onSaveClick = { historyViewModel.insertBill(it) },
                 onHistoryClick = { navController.navigate("history") }
             ))
+        }
+        composable("history") {
+            val bills = historyViewModel.bills.collectAsState().value
+            LaunchedEffect(key1 = Unit) {
+                historyViewModel.getBills()
+            }
+            HistoryScreen(items = bills)
         }
     }
 }

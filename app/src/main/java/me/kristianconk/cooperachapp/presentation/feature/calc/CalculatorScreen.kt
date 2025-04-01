@@ -37,13 +37,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.kristianconk.cooperachapp.R
 import me.kristianconk.cooperachapp.calculator.calcTotal
+import me.kristianconk.cooperachapp.domain.model.SplitedBill
 import me.kristianconk.cooperachapp.domain.model.TipType
 import me.kristianconk.cooperachapp.presentation.utils.FormatUtils
 import me.kristianconk.cooperachapp.ui.theme.CooperachAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculatorScreen(onShareClick: (String) -> Unit) {
+fun CalculatorScreen(actions: CalculatorActions) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -58,11 +59,11 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = actions.onHistoryClick) {
                         Icon(
                             imageVector = Icons.Default.History,
                             tint = MaterialTheme.colorScheme.onPrimary,
-                            contentDescription = "Clear"
+                            contentDescription = "Historial"
                         )
 
                     }
@@ -82,18 +83,21 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
         var selectedNoTip by remember { mutableStateOf(false) }
         var selectedPercentageTip by remember { mutableStateOf(false) }
         var selectedQuantityTip by remember { mutableStateOf(true) }
-
-        val totalFinal = remember {
+        val tipType by remember {
             derivedStateOf {
-                val totalDouble = totalText.toDoubleOrNull() ?: 0.0
-                val peopleInt = peopleText.toIntOrNull() ?: 1
                 val tipInt = tipText.toIntOrNull() ?: 0
-                val tipType = when {
+                when {
                     selectedNoTip -> TipType.NONE
                     selectedPercentageTip -> TipType.PERCENT(tipInt)
                     selectedQuantityTip -> TipType.FIXED(tipInt)
                     else -> TipType.NONE
                 }
+            }
+        }
+        val totalFinal = remember {
+            derivedStateOf {
+                val totalDouble = totalText.toDoubleOrNull() ?: 0.0
+                val peopleInt = peopleText.toIntOrNull() ?: 1
                 calcTotal(totalDouble, peopleInt, tipType)
             }
         }
@@ -208,12 +212,20 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
                     people = peopleText.toIntOrNull() ?: 1,
                     totalPerPerson = totalFinal.value
                 )
-                onShareClick(message)
+                actions.onShareClick(message)
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Compartir")
             }
             Button(
-                onClick = {},
+                onClick = {
+                    val bill = SplitedBill(
+                        date = java.time.LocalDateTime.now(),
+                        amount = totalText.toDoubleOrNull() ?: 0.0,
+                        people = peopleText.toIntOrNull() ?: 1,
+                        tipType = tipType
+                    )
+                    actions.onSaveClick(bill)
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Guardar")
@@ -226,6 +238,6 @@ fun CalculatorScreen(onShareClick: (String) -> Unit) {
 @Composable
 fun CalculatorScreenPreview() {
     CooperachAppTheme {
-        CalculatorScreen({})
+        CalculatorScreen(CalculatorActions())
     }
 }

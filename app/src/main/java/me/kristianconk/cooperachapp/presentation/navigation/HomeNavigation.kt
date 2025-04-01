@@ -20,11 +20,7 @@ fun HomeNavigation(historyViewModel: HistoryViewModel, activity: ComponentActivi
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
             SplashScreen(navToHome = {
-                navController.navigate("home") {
-                    /*popUpTo("splash") {
-                        inclusive = true
-                    }*/
-                }
+                navController.navigate("home")
             })
         }
         composable("home") {

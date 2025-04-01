@@ -9,5 +9,16 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+    // === data ===
+    // daos
+    single<BillDao> { BillDatabase.getInstance(get()).billDao() }
+    // api
 
+    // data source
+    // repo
+    single<BillRepository> { DBRepository(get()) }
+    // === domain ===
+
+    // === presentation ===
+    viewModel { HistoryViewModel(get()) }
 }

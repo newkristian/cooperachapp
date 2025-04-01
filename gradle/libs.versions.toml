@@ -15,6 +15,7 @@ materialIconsExtended = "1.7.8"
 materialIconsExtendedAndroid = "1.7.8"
 navigationCompose = "2.8.9"
 roomRuntime = "2.6.1"
+koin-bom = "4.0.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +40,11 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomRuntime" }
+koin-bom = { module="io.insert-koin:koin-bom", version.ref = "koin-bom"}
+koin-core = { module="io.insert-koin:koin-core", version.ref = "koin-bom"}
+koin-android = { module="io.insert-koin:koin-android", version.ref = "koin-bom"}
+koin-androidx-compose = { module="io.insert-koin:koin-androidx-compose", version.ref = "koin-bom"}
+koin-androidx-compose-navigation = { module="io.insert-koin:koin-androidx-compose-navigation", version.ref = "koin-bom"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

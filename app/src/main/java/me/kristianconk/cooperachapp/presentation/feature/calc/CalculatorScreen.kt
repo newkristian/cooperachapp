@@ -27,6 +27,7 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -101,6 +102,8 @@ fun CalculatorScreen(actions: CalculatorActions) {
                 calcTotal(totalDouble, peopleInt, tipType)
             }
         }
+        var lastFinal by remember { mutableDoubleStateOf(totalFinal.value) }
+        var saveEnabled by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -206,6 +209,10 @@ fun CalculatorScreen(actions: CalculatorActions) {
                 )
             Spacer(modifier = Modifier.height(24.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
+                if(lastFinal != totalFinal.value) {
+                    lastFinal = totalFinal.value
+                    saveEnabled = true
+                }
                 Text(
                     text = "Total por persona ${
                         FormatUtils.formatDoubleToMexicanCurrency(
@@ -235,8 +242,10 @@ fun CalculatorScreen(actions: CalculatorActions) {
                         tipType = tipType
                     )
                     actions.onSaveClick(bill)
+                    saveEnabled = false
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = saveEnabled
             ) {
                 Text(text = "Guardar")
             }

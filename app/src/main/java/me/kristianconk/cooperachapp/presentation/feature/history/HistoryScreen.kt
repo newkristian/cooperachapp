@@ -32,6 +32,7 @@ import java.time.LocalDateTime
 @Composable
 fun HistoryScreen(
     items: List<SplitedBill> = emptyList(),
+    actions: HistoryActions = HistoryActions()
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -40,7 +41,7 @@ fun HistoryScreen(
                 title = { Text(text = "Historial", color = MaterialTheme.colorScheme.onPrimary) },
                 modifier = Modifier,
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = actions.onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             tint = MaterialTheme.colorScheme.onPrimary,
